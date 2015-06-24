@@ -87,8 +87,11 @@ void ETH_BSP_Config(void)
   /* Get Ethernet link status*/
   if(ETH_ReadPHYRegister(DP83848_PHY_ADDRESS, PHY_SR) & 1)
   {
+  	put_char("link\n");
     EthStatus |= ETH_LINK_FLAG;
   }
+  else
+  	put_char("unlink\n");
 
   /* Configure the PHY to generate an interrupt on change of link status */
   Eth_Link_PHYITConfig(DP83848_PHY_ADDRESS);

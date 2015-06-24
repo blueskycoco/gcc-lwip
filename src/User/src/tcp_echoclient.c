@@ -94,7 +94,7 @@ void tcp_echoclient_connect(void)
   if (echoclient_pcb != NULL)
   {
     IP4_ADDR( &DestIPaddr, DEST_IP_ADDR0, DEST_IP_ADDR1, DEST_IP_ADDR2, DEST_IP_ADDR3 );
-    
+  
     /* connect to destination address/port */
     tcp_connect(echoclient_pcb,&DestIPaddr,DEST_PORT,tcp_echoclient_connected);
   }
@@ -103,7 +103,7 @@ void tcp_echoclient_connect(void)
     /* deallocate the pcb */
     memp_free(MEMP_TCP_PCB, echoclient_pcb);
 #ifdef SERIAL_DEBUG
-    printf("\n\r can not create tcp pcb");
+    put_char("\n\r can not create tcp pcb");
 #endif 
   }
 }

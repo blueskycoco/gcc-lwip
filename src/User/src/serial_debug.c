@@ -45,6 +45,7 @@
 #ifdef SERIAL_DEBUG
   /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
      set to 'Yes') calls __io_putchar() */
+int __io_putchar(int ch);
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -110,7 +111,7 @@ const uint16_t COM_RX_AF[COMn] = {EVAL_COM1_RX_AF};
   if (COM == COM1)
   {
     /* Enable UART clock */
-    RCC_APB1PeriphClockCmd(COM_USART_CLK[COM], ENABLE);
+    RCC_APB2PeriphClockCmd(COM_USART_CLK[COM], ENABLE);
   }
 
   /* Connect PXx to USARTx_Tx*/
@@ -166,7 +167,7 @@ void DebugComPort_Init(void)
   * @param  None
   * @retval None
   */
-int __io_putchar(int ch)
+	int __io_putchar(int ch)
 {
   /* Place your implementation of fputc here */
   /* e.g. write a character to the USART */
@@ -175,6 +176,10 @@ int __io_putchar(int ch)
   /* Loop until the end of transmission */
   while (USART_GetFlagStatus(EVAL_COM1, USART_FLAG_TC) == RESET)
   {}
+
+
+  
+  led8(1);
 
   return ch;
 }

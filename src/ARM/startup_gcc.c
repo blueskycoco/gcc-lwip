@@ -61,7 +61,7 @@ extern int main(void);
 // Reserve space for the system stack.
 //
 //*****************************************************************************
-static uint32_t pui32Stack[2048];
+static uint32_t pui32Stack[4096];
 #define BootRAM ((void *)(0xF108F85F))
 //*****************************************************************************
 //

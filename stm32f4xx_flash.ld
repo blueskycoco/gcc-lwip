@@ -12,7 +12,7 @@ Default linker script for STM32F4xx_1024K_192K
 These are used by the startup in order to allocate stacks for the different modes.
 */
 
-__Stack_Size = 1024 ;
+__Stack_Size = 4096 ;
 
 PROVIDE ( _Stack_Size = __Stack_Size ) ;
 

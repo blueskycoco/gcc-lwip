@@ -57,7 +57,13 @@ uint32_t timingdelay;
 void LCD_LED_BUTTON_Init(void);
 
 /* Private functions ---------------------------------------------------------*/
-
+void led8(int on)
+{
+	if(on)
+		GPIO_ResetBits(GPIOC,GPIO_Pin_11);
+	else
+		GPIO_SetBits(GPIOC,GPIO_Pin_11);
+}
 /**
   * @brief  Main program.
   * @param  None
@@ -71,22 +77,50 @@ int main(void)
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32f4xx.c file
      */  
+  GPIO_InitTypeDef GPIO_InitStructure;
+	
+  /* Enable GPIOs clocks */
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA | RCC_AHB1Periph_GPIOB |
+  					   RCC_AHB1Periph_GPIOC | RCC_AHB1Periph_GPIOI |
+  					   RCC_AHB1Periph_GPIOG | RCC_AHB1Periph_GPIOH |
+  					   RCC_AHB1Periph_GPIOF, ENABLE);
+  
+  /* Enable SYSCFG clock */
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);	
+  
+  /* Configure MCO (PA8) */
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+  GPIO_SetBits(GPIOC,GPIO_Pin_8);
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+  GPIO_SetBits(GPIOC,GPIO_Pin_9);
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+  GPIO_SetBits(GPIOC,GPIO_Pin_10);
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+  GPIO_SetBits(GPIOC,GPIO_Pin_11);
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
 
   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
   
 #ifdef SERIAL_DEBUG
   DebugComPort_Init();
 #endif
-
   /*Initialize LCD and Leds */
   //LCD_LED_BUTTON_Init();
-
+	//iprintf("in main\n");
+  put_char("in main\n");
+  put_char("in main\n");put_char("in main\n");put_char("in main\n");put_char("in main\n");
   /* Configure ethernet (GPIOs, clocks, MAC, DMA) */
   ETH_BSP_Config();
-
+  
   /* Initilaize the LwIP stack */
   LwIP_Init();
-  
 
   /* Infinite loop */
   while (1)
