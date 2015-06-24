@@ -58,7 +58,7 @@ enum echoclient_states
   ES_CLOSING,
 };
 
-
+int g_net_state=ES_NOT_CONNECTED;
 /* structure to be passed as argument to the tcp callbacks */
 struct echoclient
 {
@@ -126,6 +126,7 @@ static err_t tcp_echoclient_connected(void *arg, struct tcp_pcb *tpcb, err_t err
     if (es != NULL)
     {
       es->state = ES_CONNECTED;
+	  g_net_state = ES_CONNECTED;
       es->pcb = tpcb;
       
       sprintf((char*)data, "sending tcp client message %d", message_count);
@@ -195,6 +196,7 @@ static err_t tcp_echoclient_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p
   {
     /* remote host closed connection */
     es->state = ES_CLOSING;
+	g_net_state = ES_CLOSING;
     if(es->p_tx == NULL)
     {
        /* we're done sending, close connection */
@@ -374,7 +376,7 @@ static void tcp_echoclient_connection_close(struct tcp_pcb *tpcb, struct echocli
 
   /* close tcp connection */
   tcp_close(tpcb);
-  
+  g_net_state = ES_NOT_CONNECTED;
 }
 
 #endif /* LWIP_TCP */

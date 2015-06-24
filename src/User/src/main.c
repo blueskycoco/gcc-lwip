@@ -36,6 +36,7 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define SYSTEMTICK_PERIOD_MS  10
+extern int g_net_state;
 
 /*--------------- LCD Messages ---------------*/
 #if defined (STM32F40XX)
@@ -85,10 +86,16 @@ int main(void)
 
   /* Initilaize the LwIP stack */
   LwIP_Init();
+  
 
   /* Infinite loop */
   while (1)
   {  
+  	if(g_net_state==0)
+	{
+		tcp_echoclient_connect();
+		continue;
+  	}
     /* check if any packet received */
     if (ETH_CheckFrameReceived())
     { 

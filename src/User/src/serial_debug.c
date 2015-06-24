@@ -43,15 +43,8 @@
 #include <stdio.h>
 
 #ifdef SERIAL_DEBUG
-/* Private typedef -----------------------------------------------------------*/
-/* Private define ------------------------------------------------------------*/
-#ifdef __GNUC__
   /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
      set to 'Yes') calls __io_putchar() */
-  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#endif /* __GNUC__ */
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -173,7 +166,7 @@ void DebugComPort_Init(void)
   * @param  None
   * @retval None
   */
-PUTCHAR_PROTOTYPE
+int __io_putchar(int ch)
 {
   /* Place your implementation of fputc here */
   /* e.g. write a character to the USART */

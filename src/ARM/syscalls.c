@@ -54,7 +54,7 @@ caddr_t _sbrk(int incr) {
 int _write(int file, char *ptr, int len) {
   int todo;
   for (todo = 0; todo < len; todo++) {
-    PUTCHAR_PROTOTYPE(*ptr++);
+    __io_putchar(*ptr++);
   }
   return len;
 }
