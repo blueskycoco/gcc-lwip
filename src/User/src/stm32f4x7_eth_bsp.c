@@ -381,12 +381,12 @@ void ETH_link_callback(struct netif *netif)
 #endif /* USE_DHCP */
 
   /* Clear LCD */
-  LCD_ClearLine(Line4);
-  LCD_ClearLine(Line5);
-  LCD_ClearLine(Line6);
-  LCD_ClearLine(Line7);
-  LCD_ClearLine(Line8);
-  LCD_ClearLine(Line9);
+//  LCD_ClearLine(Line4);
+//  LCD_ClearLine(Line5);
+//  LCD_ClearLine(Line6);
+ // LCD_ClearLine(Line7);
+//  LCD_ClearLine(Line8);
+//  LCD_ClearLine(Line9);
 
   if(netif_is_link_up(netif))
   {

@@ -130,9 +130,10 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
-void EXTI15_10_IRQHandler(void) 
+void EXTI2_IRQHandler(void) 
 {
-  if(EXTI_GetITStatus(EXTI_Line15) != RESET)
+#if 0
+  if(EXTI_GetITStatus(EXTI_Line2) != RESET)
   {
     if (EthLinkStatus == 0)
     {
@@ -142,6 +143,7 @@ void EXTI15_10_IRQHandler(void)
     /* Clear the EXTI line  pending bit */
     EXTI_ClearITPendingBit(KEY_BUTTON_EXTI_LINE);
   }
+#endif
   if(EXTI_GetITStatus(ETH_LINK_EXTI_LINE) != RESET)
   {
     Eth_Link_ITHandler(DP83848_PHY_ADDRESS);

@@ -138,14 +138,14 @@ void LwIP_Init(void)
     DHCP_state = DHCP_LINK_DOWN;
 #endif /* USE_DHCP */
     /* Set the LCD Text Color */
-    LCD_SetTextColor(Red);
+    //LCD_SetTextColor(Red);
 
     /* Display message on the LCD */
-    LCD_DisplayStringLine(Line5, (uint8_t*)"  Network Cable is  ");
-    LCD_DisplayStringLine(Line6, (uint8_t*)"    not connected   ");
+    //LCD_DisplayStringLine(Line5, (uint8_t*)"  Network Cable is  ");
+    //LCD_DisplayStringLine(Line6, (uint8_t*)"    not connected   ");
 
     /* Set the LCD Text Color */
-    LCD_SetTextColor(White);
+    //LCD_SetTextColor(White);
   }
   
   /* Set the link callback function, this function is called on change of link status*/

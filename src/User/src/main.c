@@ -78,7 +78,7 @@ int main(void)
 #endif
 
   /*Initialize LCD and Leds */
-  LCD_LED_BUTTON_Init();
+  //LCD_LED_BUTTON_Init();
 
   /* Configure ethernet (GPIOs, clocks, MAC, DMA) */
   ETH_BSP_Config();
@@ -139,16 +139,16 @@ void LCD_LED_BUTTON_Init(void)
 #endif
 
   /* Initialize STM324xG-EVAL's LEDs */
-  STM_EVAL_LEDInit(LED1);
-  STM_EVAL_LEDInit(LED2);
-  STM_EVAL_LEDInit(LED3);
-  STM_EVAL_LEDInit(LED4);
+  //STM_EVAL_LEDInit(LED1);
+  //STM_EVAL_LEDInit(LED2);
+  //STM_EVAL_LEDInit(LED3);
+  //STM_EVAL_LEDInit(LED4);
 
   /* Leds on */
-  STM_EVAL_LEDOn(LED1);
-  STM_EVAL_LEDOn(LED2);
-  STM_EVAL_LEDOn(LED3);
-  STM_EVAL_LEDOn(LED4);
+  //STM_EVAL_LEDOn(LED1);
+  //STM_EVAL_LEDOn(LED2);
+  //STM_EVAL_LEDOn(LED3);
+  //STM_EVAL_LEDOn(LED4);
  
 #ifdef USE_LCD
   /* Clear the LCD */
@@ -167,7 +167,7 @@ void LCD_LED_BUTTON_Init(void)
   LCD_DisplayStringLine(Line3, (uint8_t*)MESSAGE4);  
 #endif
   
-  STM_EVAL_PBInit(BUTTON_KEY, BUTTON_MODE_EXTI);
+  //STM_EVAL_PBInit(BUTTON_KEY, BUTTON_MODE_EXTI);
 }
 
 #ifdef  USE_FULL_ASSERT

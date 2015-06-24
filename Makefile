@@ -58,6 +58,7 @@ VPATH+=./src/LwIP/src/netif/ppp
 VPATH+=./src/LwIP/port/STM32F4x7/Standalone
 VPATH+=./src/STM32F4x7_ETH_Driver/src
 VPATH+=./src/STM32F4xx_StdPeriph_Driver/src
+VPATH+=./src/cmsis
 VPATH+=./src/User/src
 VPATH+=./src/STM32_EVAL/STM3240_41_G_EVAL
 VPATH+=./src/ARM
@@ -85,6 +86,7 @@ ${COMPILER}:
 # Rules for building the uart_echo example.
 #
 ${COMPILER}/net.axf: ${COMPILER}/startup_${COMPILER}.o
+${COMPILER}/net.axf: ${COMPILER}/syscalls.o
 ${COMPILER}/net.axf: ${COMPILER}/system_stm32f4xx.o
 ${COMPILER}/net.axf: ${COMPILER}/ethernetif.o
 ${COMPILER}/net.axf: ${COMPILER}/api_lib.o
@@ -151,26 +153,37 @@ ${COMPILER}/net.axf: ${COMPILER}/tcp_echoclient.o
 ${COMPILER}/net.axf: ${COMPILER}/misc.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_adc.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_can.o
+${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_cec.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_crc.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_cryp.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_cryp_aes.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_cryp_des.o
+${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_cryp_tdes.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_dac.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_dbgmcu.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_dcmi.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_dma.o
+${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_dma2d.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_exti.o
+${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_flash.o
+${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_flash_ramfunc.o
+${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_fmc.o
+${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_fmpi2c.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_fsmc.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_hash.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_hash_md5.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_hash_sha1.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_i2c.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_iwdg.o
+${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_ltdc.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_pwr.o
+${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_qspi.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_rcc.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_rng.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_rtc.o
+${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_sai.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_spi.o
+${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_spdifrx.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_tim.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_wwdg.o
 ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_cryp_tdes.o
@@ -182,7 +195,7 @@ ${COMPILER}/net.axf: ${COMPILER}/stm32f4xx_usart.o
 ${COMPILER}/net.axf: stm32f4xx_flash.ld
 SCATTERgcc_net=stm32f4xx_flash.ld
 ENTRY_net=ResetISR
-CFLAGSgcc=-DUSE_STDPERIPH_DRIVER -DSTM32F40XX -DUSE_STM324xG_EVAL
+CFLAGSgcc=-DUSE_STDPERIPH_DRIVER -DSTM32F429_439xx -DUSE_STM324xG_EVAL -DSERIAL_DEBUG
 
 #
 # Include the automatically generated dependency files.

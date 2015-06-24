@@ -35,9 +35,9 @@ Linker subscript for STM32F4xx definitions with 1024 Flash and 192 Onchip SRAM *
 
 MEMORY
 {
-  RAM (xrw) : ORIGIN = 0x20000000, LENGTH = 128K
+  RAM (xrw) : ORIGIN = 0x20000000, LENGTH = 256K
   CCMRAM (xrw) : ORIGIN = 0x10000000, LENGTH = 64K
-  FLASH (rx) : ORIGIN = 0x8000000, LENGTH = 1024K
+  FLASH (rx) : ORIGIN = 0x8000000, LENGTH = 2048K
   FLASHB1 (rx) : ORIGIN = 0x00000000, LENGTH = 0
   EXTMEMB0 (rx) : ORIGIN = 0x00000000, LENGTH = 0
   EXTMEMB1 (rx) : ORIGIN = 0x00000000, LENGTH = 0
@@ -47,9 +47,7 @@ MEMORY
 }
 
 /* higher address of the user mode stack (end of 128K RAM on AHB bus)*/
-_estack = 0x20020000;
-
-
+_estack = 0x20040000;
 
 /* include the sections management sub-script for FLASH mode */
 
@@ -91,7 +89,11 @@ SECTIONS
 	    /* This is used by the startup in order to initialize the .data secion */
    	 _sidata = _etext;
     } >FLASH
-    
+    .ARM.exidx : {
+		__exidx_start = .;
+		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
+		__exidx_end = .;
+	} >FLASH
     /* MEMORY_ARRAY */
     .ROarraySection :
     {
@@ -103,7 +105,7 @@ SECTIONS
     The program executes knowing that the data is in the RAM
     but the loader puts the initial values in the FLASH (inidata).
     It is one task of the startup to copy the initial values from FLASH to RAM. */
-    .data  : AT ( _sidata )
+    .data :
     {
 	    . = ALIGN(4);
         /* This is used by the startup in order to initialize the .data secion */
@@ -115,7 +117,7 @@ SECTIONS
 	    . = ALIGN(4);
 	    /* This is used by the startup in order to initialize the .data secion */
    	 _edata = . ;
-    } >RAM
+    } >RAM AT>FLASH
     
     
 
@@ -136,6 +138,7 @@ SECTIONS
     
     PROVIDE ( end = _ebss );
     PROVIDE ( _end = _ebss );
+    PROVIDE ( __cs3_heap_end = _sdata );
     
     /* This is the user stack section 
     This is just to check that there is enough RAM left for the User mode stack
@@ -205,13 +208,7 @@ SECTIONS
     /* after that it's only debugging information. */
     
     /* remove the debugging information from the standard libraries */
-    DISCARD :
-    {
-     libc.a ( * )
-     libm.a ( * )
-     libgcc.a ( * )
-     }
-  
+    
   
     /* Stabs debugging sections.  */
     .stab          0 : { *(.stab) }

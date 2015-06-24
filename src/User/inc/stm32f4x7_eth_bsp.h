@@ -35,12 +35,12 @@
 
 /* Includes ------------------------------------------------------------------*/
 #if defined (USE_STM324xG_EVAL)
-  #include "stm324xg_eval.h"
-  #include "stm324xg_eval_lcd.h"
+  //#include "stm324xg_eval.h"
+  //#include "stm324xg_eval_lcd.h"
 
 #elif defined (USE_STM324x7I_EVAL) 
-  #include "stm324x7i_eval.h"
-  #include "stm324x7i_eval_lcd.h"
+  //#include "stm324x7i_eval.h"
+  //#include "stm324x7i_eval_lcd.h"
 
 #else
  #error "Please select first the Evaluation board used in your application (in Project Options)"
@@ -53,14 +53,14 @@
 #define DP83848_PHY_ADDRESS       ((uint16_t) 0x01) /* Relative to STM324xG-EVAL Board */
 
 /* Specific defines for EXTI line, used to manage Ethernet link status */
-#define ETH_LINK_EXTI_LINE             EXTI_Line14
-#define ETH_LINK_EXTI_PORT_SOURCE      EXTI_PortSourceGPIOB
-#define ETH_LINK_EXTI_PIN_SOURCE       EXTI_PinSource14
-#define ETH_LINK_EXTI_IRQn             EXTI15_10_IRQn 
+#define ETH_LINK_EXTI_LINE             EXTI_Line2
+#define ETH_LINK_EXTI_PORT_SOURCE      EXTI_PortSourceGPIOD
+#define ETH_LINK_EXTI_PIN_SOURCE       EXTI_PinSource2
+#define ETH_LINK_EXTI_IRQn             EXTI2_IRQn 
 /* PB14 */
-#define ETH_LINK_PIN                   GPIO_Pin_14
-#define ETH_LINK_GPIO_PORT             GPIOB
-#define ETH_LINK_GPIO_CLK              RCC_AHB1Periph_GPIOB
+#define ETH_LINK_PIN                   GPIO_Pin_2
+#define ETH_LINK_GPIO_PORT             GPIOD
+#define ETH_LINK_GPIO_CLK              RCC_AHB1Periph_GPIOD
 
 /* Ethernet Flags for EthStatus variable */   
 #define ETH_INIT_FLAG           0x01 /* Ethernet Init Flag */

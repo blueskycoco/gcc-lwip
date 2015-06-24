@@ -30,10 +30,10 @@
 #include "stm32f4xx.h"
 
 #if defined (USE_STM324xG_EVAL)
-  #include "stm324xg_eval.h"
+  //#include "stm324xg_eval.h"
 
 #elif defined (USE_STM324x7I_EVAL) 
-  #include "stm324x7i_eval.h"
+  //#include "stm324x7i_eval.h"
 
 #else
  #error "Please select first the Evaluation board used in your application (in Project Options)"
@@ -64,6 +64,88 @@
   * @param  None
   * @retval None
   */
+#define COMn                             1
+#define EVAL_COM1                        USART6
+#define EVAL_COM1_CLK                    RCC_APB2Periph_USART6
+#define EVAL_COM1_TX_PIN                 GPIO_Pin_6
+#define EVAL_COM1_TX_GPIO_PORT           GPIOC
+#define EVAL_COM1_TX_GPIO_CLK            RCC_AHB1Periph_GPIOC
+#define EVAL_COM1_TX_SOURCE              GPIO_PinSource6
+#define EVAL_COM1_TX_AF                  GPIO_AF_USART6
+#define EVAL_COM1_RX_PIN                 GPIO_Pin_7
+#define EVAL_COM1_RX_GPIO_PORT           GPIOC
+#define EVAL_COM1_RX_GPIO_CLK            RCC_AHB1Periph_GPIOC
+#define EVAL_COM1_RX_SOURCE              GPIO_PinSource7
+#define EVAL_COM1_RX_AF                  GPIO_AF_USART6
+#define EVAL_COM1_IRQn                   USART6_IRQn
+USART_TypeDef* COM_USART[COMn] = {EVAL_COM1}; 
+
+GPIO_TypeDef* COM_TX_PORT[COMn] = {EVAL_COM1_TX_GPIO_PORT};
+ 
+GPIO_TypeDef* COM_RX_PORT[COMn] = {EVAL_COM1_RX_GPIO_PORT};
+
+const uint32_t COM_USART_CLK[COMn] = {EVAL_COM1_CLK};
+
+const uint32_t COM_TX_PORT_CLK[COMn] = {EVAL_COM1_TX_GPIO_CLK};
+ 
+const uint32_t COM_RX_PORT_CLK[COMn] = {EVAL_COM1_RX_GPIO_CLK};
+
+const uint16_t COM_TX_PIN[COMn] = {EVAL_COM1_TX_PIN};
+
+const uint16_t COM_RX_PIN[COMn] = {EVAL_COM1_RX_PIN};
+ 
+const uint16_t COM_TX_PIN_SOURCE[COMn] = {EVAL_COM1_TX_SOURCE};
+
+const uint16_t COM_RX_PIN_SOURCE[COMn] = {EVAL_COM1_RX_SOURCE};
+ 
+const uint16_t COM_TX_AF[COMn] = {EVAL_COM1_TX_AF};
+ 
+const uint16_t COM_RX_AF[COMn] = {EVAL_COM1_RX_AF};
+ typedef enum 
+ {
+   COM1 = 0,
+   COM2 = 1
+ } COM_TypeDef;
+
+ void STM_EVAL_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct)
+{
+  GPIO_InitTypeDef GPIO_InitStructure;
+
+  /* Enable GPIO clock */
+  RCC_AHB1PeriphClockCmd(COM_TX_PORT_CLK[COM] | COM_RX_PORT_CLK[COM], ENABLE);
+
+  if (COM == COM1)
+  {
+    /* Enable UART clock */
+    RCC_APB1PeriphClockCmd(COM_USART_CLK[COM], ENABLE);
+  }
+
+  /* Connect PXx to USARTx_Tx*/
+  GPIO_PinAFConfig(COM_TX_PORT[COM], COM_TX_PIN_SOURCE[COM], COM_TX_AF[COM]);
+
+  /* Connect PXx to USARTx_Rx*/
+  GPIO_PinAFConfig(COM_RX_PORT[COM], COM_RX_PIN_SOURCE[COM], COM_RX_AF[COM]);
+
+  /* Configure USART Tx as alternate function  */
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+
+  GPIO_InitStructure.GPIO_Pin = COM_TX_PIN[COM];
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_Init(COM_TX_PORT[COM], &GPIO_InitStructure);
+
+  /* Configure USART Rx as alternate function  */
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Pin = COM_RX_PIN[COM];
+  GPIO_Init(COM_RX_PORT[COM], &GPIO_InitStructure);
+
+  /* USART configuration */
+  USART_Init(COM_USART[COM], USART_InitStruct);
+    
+  /* Enable USART */
+  USART_Cmd(COM_USART[COM], ENABLE);
+}
 void DebugComPort_Init(void)
 {
   USART_InitTypeDef USART_InitStructure;
