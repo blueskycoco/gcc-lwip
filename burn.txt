@@ -1,0 +1,8 @@
+r
+h
+speed 1200
+exec device=STM32F437II
+loadbin d:\gcc-lwip\gcc\net.bin 0x08000000
+r
+g
+qc
