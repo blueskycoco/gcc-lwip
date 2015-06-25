@@ -118,18 +118,19 @@ int main(void)
   put_char("in main\n");put_char("in main\n");put_char("in main\n");put_char("in main\n");
   /* Configure ethernet (GPIOs, clocks, MAC, DMA) */
   ETH_BSP_Config();
-  
+  put_char("here12\n");
   /* Initilaize the LwIP stack */
   LwIP_Init();
+  put_char("here11\n");
+  //if(g_net_state==0)
+  {
+	  tcp_echoclient_connect();
+  }
+  put_char("here13\n");
 
   /* Infinite loop */
   while (1)
   {  
-  	if(g_net_state==0)
-	{
-		tcp_echoclient_connect();
-		continue;
-  	}
     /* check if any packet received */
     if (ETH_CheckFrameReceived())
     { 

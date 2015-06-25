@@ -87,16 +87,18 @@ static err_t tcp_echoclient_connected(void *arg, struct tcp_pcb *tpcb, err_t err
 void tcp_echoclient_connect(void)
 {
   struct ip_addr DestIPaddr;
-  
+  put_char("here31\n");
   /* create new tcp pcb */
   echoclient_pcb = tcp_new();
-  
+  put_char("here41\n");
   if (echoclient_pcb != NULL)
   {
     IP4_ADDR( &DestIPaddr, DEST_IP_ADDR0, DEST_IP_ADDR1, DEST_IP_ADDR2, DEST_IP_ADDR3 );
   
     /* connect to destination address/port */
+	put_char("here1\n");
     tcp_connect(echoclient_pcb,&DestIPaddr,DEST_PORT,tcp_echoclient_connected);
+	put_char("here2\n");
   }
   else
   {

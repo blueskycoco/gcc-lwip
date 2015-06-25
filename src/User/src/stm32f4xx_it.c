@@ -61,6 +61,7 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* Go to infinite loop when Hard Fault exception occurs */
+  put_char("HardFault_Handler\n");
   while (1)
   {
   }
@@ -74,6 +75,7 @@ void HardFault_Handler(void)
 void MemManage_Handler(void)
 {
   /* Go to infinite loop when Memory Manage exception occurs */
+  put_char("memmange_handler\n");
   while (1)
   {
   }
@@ -87,6 +89,7 @@ void MemManage_Handler(void)
 void BusFault_Handler(void)
 {
   /* Go to infinite loop when Bus Fault exception occurs */
+  put_char("BusFault_Handler\n");
   while (1)
   {
   }
@@ -100,6 +103,7 @@ void BusFault_Handler(void)
 void UsageFault_Handler(void)
 {
   /* Go to infinite loop when Usage Fault exception occurs */
+  put_char("UsageFault_Handler\n");
   while (1)
   {
   }
@@ -112,6 +116,8 @@ void UsageFault_Handler(void)
   */
 void DebugMon_Handler(void)
 {
+	put_char("DebugMon_Handler\n");
+
 }
 
 /**

@@ -256,6 +256,7 @@ NmiSR(void)
 	//
 	// Enter an infinite loop.
 	//
+	put_char("NmiSR\n");
 	while(1)
 	{
 	}
@@ -274,6 +275,7 @@ FaultISR(void)
 	//
 	// Enter an infinite loop.
 	//
+	put_char("FaultISR\n");
 	while(1)
 	{
 	}
